@@ -28,4 +28,12 @@
        ^
 SyntaxError: invalid syntax
 ```
-結果就變成這樣啦!python會卡在出現錯誤的地方。
+結果就變成這樣啦!python會卡在出現錯誤的地方。  
+那什麼是正確的宣告方式呢?
+```python
+  範例:
+  abc=21
+  print(abc)
+  執行結果:
+  21
+```
