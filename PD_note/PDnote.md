@@ -243,3 +243,38 @@ for x in range(2):
 #第一個0是x的print，之後會進入y的程序，y會跑完之後才會x才會前進
 #因此結果輸出的順序是 x y y x y y 
 ```
+### List用法
+List是很常用，也很好用的資料型態，和array的差別在於list裡面可以存不同型別的資料，例如可以同時存有字串和數值等，但array就不行，array必須要同一種型別(全字串或全數值)。
+```python
+movies=["訓龍高手",1975,"醉後大丈夫",1979,"刀劍神域序列戰爭",1983] #順序是0,1,2 爬資料要去找資料共同的規律 一個陣列裡面可以混用
+print(movies[0])
+#這邊會跑出訓龍高手，每筆資料仍然有對應的index可以查詢。
+
+cast=["呈澔","君霖","黃飛鴻","江宇"]
+print(len(cast)) 
+#len()可以告訴我們這個list的長度
+```
+那麼接下來就是如何針對list裡面的資料做新增、刪除等動作。  
+分別能使用append、pop、remove、extend、insert
+```python
+cast.append("葉問") 
+print(cast)
+#只能從資料末端加入
+
+cast.pop() 
+print(cast)
+#從末端消除
+
+cast.extend(["張天智","伊達政宗"])
+print(cast)
+#可以加多筆資料
+
+cast.remove("伊達政宗") 
+print(cast)
+#可以直接指定消除
+
+cast.insert(0,"巨石強森")
+print(cast)
+#可指定要新增的index
+```
+
