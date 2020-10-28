@@ -642,4 +642,50 @@ try:
 except IOError:  #具體告訴電腦是IOError
 	print("the data is missing")
 ```
+恭喜大家完成了資料整理的第一關。    
+接下來繼續往第二關邁進。  
+這次的檔案也是練習，一樣是隨便打的一串數字名稱就叫mikey吧!
+2-34,3:21,2.34,2.45,3.01,2:01,2:01,3:10,2-22
+```python
+with open("mikey.txt") as mk:
+	data=mk.readline()
+	mikey=data.strip().split(",")
+print(mikey)
+#把檔案名稱設定在程式內認成mk然後以,為基準點切割
+#之後將結果印出
+```
+我們可以得出跟當按裡面一樣的結果，之後來製作一個函數作為分割工具。
+```python
+def sanitized(time_string):
+    if "-" in time_string:
+        splitter = "-"
+    elif ":" in time_string:
+        splitter= ":"
+    else:
+        return(time_string)
+    (mins,secs) = time_string.split(splitter)
+    return (mins + "." + secs)
+# 製造分割工具，將裡面的符號都作為分割點，然後替換成統一的.
+```
+開一個新的list把結果存進去
+```python
+clean_mikey=[sanitized(each_t) for each_t in mikey] #把條件寫在list裡面，或是用for迴圈去append進去都可以
+print(sorted(clean_mikey))
+結果:
+['2.22', '2.38', '2.49', '3.01', '3.01', '3.02', '3.02', '3.02', '3.22']
+```
+可以看到，全部的資料都統一變成.了。人為紀錄資料常常有這種符號用錯的狀況，所以整理資料的時候可以把它統一比較好處理。  
+然後假設我今天只要不重複的資料，方法有兩種，可以自己寫或是用套件都可以。
+```python
+print(set(clean_mikey))  #set 會幫你把同樣的數值去掉
+
+#以下是自己寫的方式
+mikey=sorted([sanitized(t) for t in mikey])
+unique_mikey=[]
+for each_t in mikey:
+    if each_t not in unique_mikey:
+        unique_mikey.append(each_t)
+print(unique_mikey)
+```
+都會得到一樣的結果:['2.22', '2.38', '2.49', '3.01', '3.02', '3.22']
 
