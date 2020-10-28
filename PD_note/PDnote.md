@@ -405,3 +405,62 @@ Terry Jones
 備註:宣告的函數()裡面要給的數值都要給齊，例如這個函數一定要給一個(the_list)，不給的話就會error
 
 看完比較困難的部分，來補充list的一些小撇步。
+首先是剛剛有提到的index，可以理解成list裡面的每筆資料對應的編號。
+```python
+fam=[1.73,1.68,1.71,1.89]
+#     0    1    2    3    這是順向的位置
+#    -4   -3   -2   -1    也可以倒過來
+```
+知道這個運作，就可以利用index抓出list裡面自己想要的資料囉!
+```python
+sum(fam)
+#可以加總list裡面的數值
+len(fam)
+#顯示list的長度
+fam[0]
+#回傳該index位置的值
+fam[3:5] 
+#回傳index 3到5的值，但不包含尾(5號位)。若要抓到5號則需要設定成3:6
+```
+以上就是list常用的基本操作啦!其他的小練習內容比較雜，其實只要知道list的index如何查詢就差不多了。  
+如果有需要請參考我的PD0314、PD0321的程式碼吧!  
+接下來回到剛才拆括號的延伸，如果我想知道哪些資料是被拆括號的呢?   
+那只要針對我們的拆括號函數print_lol()來做修改就可以囉!
+```python
+def print_lol(the_list, level=0): #這裡需要的變數可以預先設定「預設值」，這樣使用者就算不輸入也不會出現error
+    for each_item in the_list:
+        if isinstance(each_item, list):
+            print_lol(each_item, level+1)   #除了拆括號外，新增一個level
+        else:
+            for tab_stop in range(level):   #原本的else只是單純印出，預設的level是0因此第一次執行時，這裡的for迴圈不會執行。
+                print("\t",end=" ")   #多印一個縮排
+            print(each_item)
+#遞迴開始的時候，level+1會使得else的for迴圈開始執行。
+#因此我就能達成目標，讓內層的list印出的資料前面都會加上一個縮排
+```
+這樣一來我就會知道，內層list的資料是哪些。因為都會被縮排，並根據縮排一次或兩次來知道他是第幾層的資料。  
+接下來實測吧!
+```python
+names=["john","eric",["clare","anny"],"michael",["berlin"]]
+print_lol(names,0) #假設使用者要自行設定的話，可以自己加數值
+結果:
+john
+eric
+	 clare
+	 anny
+michael
+	 berlin
+```
+再來介紹python寫入資料的功能
+```python
+name=input("請輸入檔名:")  #讓使用者自行輸入檔案名稱
+file= open (name,"w",encoding="UTF-8") # w是 write寫入模式 要先檢查編碼方式通常預設是unicode，中文要調成UTF-8
+file.write("test")                     #我要在這個空的檔案裏面寫入test
+file.close()                           #會開始執行
+#結果是他會開啟一個123的txt檔，然後把test寫進去
+file= open (name,"r",encoding="UTF-8") #r代表閱讀模式
+content=file.read()                    #IDLE 會跑出test
+print(content)                         #把內容print出來
+file.close()
+#結果就是會把剛剛謝的test印出來
+```
