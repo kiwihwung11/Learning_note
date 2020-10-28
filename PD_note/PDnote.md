@@ -688,4 +688,28 @@ for each_t in mikey:
 print(unique_mikey)
 ```
 都會得到一樣的結果:['2.22', '2.38', '2.49', '3.01', '3.02', '3.22']
-
+到這邊大家對於資料處理就有初步的了解了!接下來就要進入爬蟲的環節啦!
+### 爬蟲開始
+終於來到令人興奮的章節啦!讓我們先來準備爬蟲的套件吧!
+備註:網站會隨時更新，由於使用的套件request和beautiful soup沒辦法所有網站都爬的到，需要嘗試。
+```python
+import requests
+res=requests.get("https://www.books.com.tw")
+print(res.text)
+#結果會是該網站的原始碼，可去該網站案右鍵檢視網頁原始碼，這邊是用博客來來玩
+```
+結果超級長，因為他把整個原始碼都爬下來了。
+```python
+from bs4 import BeautifulSoup #這是資料剖析套件
+soup=BeautifulSoup(res.text,"html.parser")
+count=1
+for item in soup.select(".DY5T1d"): #這的括號要放什麼要自己找規律性決定
+	print("====[",count,"]====")
+	title=(item.text)
+	url=item.get("href")
+	print(title)
+	print(url)
+	count+=1
+#這一串是在抓取標題，並把裡面我們需要的部分抓出來
+#如果執行不出來有可能是因為該網頁的編號已經換過了
+```
