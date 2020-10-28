@@ -277,4 +277,127 @@ cast.insert(0,"巨石強森")
 print(cast)
 #可指定要新增的index
 ```
+那我們要如何去使用list呢?結合之前的for迴圈可以執行的任務很多喔!  
+可以讓數值加總，或是把資料整理成某種你想要的狀態...等等幾乎都可以。  
+來看看範例吧!
+```python
+fav_movies=["訓龍高手","醉後大丈夫"]
+for each_flick  in fav_movies : 
+    print(each_flick)
+#把list裡面的東西全部印出來
+結果:
+訓龍高手
+醉後大丈夫
 
+x=0
+while x<len(fav_movies):
+    print(fav_movies[x])
+    x+=1
+#用while的寫法
+```
+接下來要介紹比較複雜的狀況，也就是list裡面還有list。蛤?你問怎麼會有這種東西?假設今天要用爬蟲去網站抓資料，抓下來的內容常常是雜亂的。  
+因此學會把資料整理成自己想要的樣子是很重要的，接下來的內容會圍繞著這個部分前進。
+```python
+for each_item in movies:
+    print(each_item)
+#印出list裡面的所有屬性
+結果:
+The Holy Grail
+1975
+Terry Jones & Terry Gilliam
+91
+['Graham Chapman', ['Michael Palin', 'John Cleese', 'Terry Gilliam', 'Eric Idle', 'Terry Jones']]
+```
+大家會發現存在list裡面的內層list整個算是一筆資料。所以在使用index查詢時要從最外層開始往內找。
+```python
+movies=["The Holy Grail", 1975, "Terry Jones & Terry Gilliam", 91, ["Graham Chapman", ["Michael Palin", "John Cleese", "Terry Gilliam", "Eric Idle", "Terry Jones"]]]
+print(movies[4][1][3]) 
+#第四筆(對第一層來說)的第一筆(對第二層來說)資料中的第三筆(對第三層來說)
+結果:
+Eric Idle
+```
+這邊來介紹一個好用的函數isinstance()這個函數可以幫你判斷某個資料是否為某種型態的資料。
+```python
+names=["Michael","Terry"]
+isinstance(names,list) 
+#這個是問說這個資料是不是list
+```
+不知道大家是否覺得剛剛的list裡面還有list這件事很麻煩阿?  
+接下來就來教大家拆解!(切洋蔥)  
+```python
+for each_item in movies:
+    if isinstance(each_item,list):
+        for nested_item in each_item:
+            print(nested_item)
+    else:
+        print(each_item)
+#第一層for我指定要看movies裡面的每個資料，並且判斷是否為list型態。
+#如果是list型態就執行第二層的for，也就是把內層list的資料全部印出來(if)
+#如果不是的話就直接印出(else)
+結果:
+The Holy Grail
+1975
+Terry Jones & Terry Gilliam
+91
+Graham Chapman
+['Michael Palin', 'John Cleese', 'Terry Gilliam', 'Eric Idle', 'Terry Jones']
+```
+大家會發現我們成功拆掉一層了!為什麼沒辦法全部拆掉呢?因為第二層for只會執行一次，他判斷Graham Chapman的這層是list然後就把裡面資料都印出來了。  
+而迴圈也剛好執行到這邊會結束(全部資料都拜訪完了)。  
+接下來讓我們挑戰把它全部拆完吧!
+```python
+for each_item in movies:
+    if isinstance(each_item,list):
+        for nested_item in each_item:
+            if isinstance(nested_item,list):
+                for tri_item in nested_item:
+                    print(tri_item)
+            else:
+                print(nested_item)
+    else:
+        print(each_item)
+#我只要在第二層for裡面也做一次判斷是否為list，然後將裡面資料全部印出就行了!
+結果:
+The Holy Grail
+1975
+Terry Jones & Terry Gilliam
+91
+Graham Chapman
+Michael Palin
+John Cleese
+Terry Gilliam
+Eric Idle
+Terry Jones
+```
+拆完啦!真的跟切洋蔥一樣淚流滿面，那如果我有一百層不就要切一百次嗎??那我迴圈要幾個for啊?  
+別著急，之後會跟大家展示一個聰明一點的方式，就是「遞迴」!
+```python
+def print_lol(the_list):
+    for each_item in the_list:
+        if isinstance(each_item, list):
+            print_lol(each_item)   #回到上方的函數(遞迴)
+        else:
+            print(each_item)
+print_lol(movies)
+結果:
+The Holy Grail
+1975
+Terry Jones & Terry Gilliam
+91
+Graham Chapman
+Michael Palin
+John Cleese
+Terry Gilliam
+Eric Idle
+Terry Jones
+```
+> 先來解釋這段程式的意義
+>> def宣告我要寫一個函數，並且名稱叫做print_lol(可以自己取名)，裡面預設要給他一個變數the_list(一樣可以自己取名)
+>> 第一層for要拜訪list裡面所有資料，並判斷這個list裡面是否有其他list型態的資料。
+>> 如果內層資料不是list的話，就直接印出就好。
+>> *重點在這!如果是list的話，我就要使用print_lol()這個自己寫的函數，對內層的list去做一樣的事情。*
+啥?!怎麼這麼短的程式就能夠完成了?  
+其實「遞迴」的概念就是將「重複執行」的部分(也就是迴圈)，變成函數的形式。  
+然後在函數裡面重新call自己(也就是說處理第一遍的資料會更新，然後再處理第二遍、第三遍...)  
+那大家可能會想問，什麼時候會停呢?答案是:不知道XD  
+這就是遞迴危險的地方，可能會不知道盡頭在哪裡，而且也只會輸出最終結果過程看不見，使用上要小心。但遞迴的優點就是程式短，而且能重複更新執行。
