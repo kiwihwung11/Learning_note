@@ -243,6 +243,7 @@ for x in range(2):
 #第一個0是x的print，之後會進入y的程序，y會跑完之後才會x才會前進
 #因此結果輸出的順序是 x y y x y y 
 ```
+## 資料整理與爬蟲
 ### List用法
 List是很常用，也很好用的資料型態，和array的差別在於list裡面可以存不同型別的資料，例如可以同時存有字串和數值等，但array就不行，array必須要同一種型別(全字串或全數值)。
 ```python
@@ -464,3 +465,181 @@ print(content)                         #把內容print出來
 file.close()
 #結果就是會把剛剛謝的test印出來
 ```
+### 處理擷取下來的資料
+前面我們探討如何處理list的資料以及使用方法。  
+但網路擷取的資料不會都是list的形式，長相百百種。  
+接下來我們一起模擬擷取資料的處理方法。  
+接下來會用到一個模擬的txt檔內容如下，從網路上隨便複製一段對話內容貼在txt來模擬爬蟲擷取。  
+Man said:Is this the right room for an argument?
+Other Man said:I've told you: once.
+Man said:No you haven't!
+Other Man said:Yes I have.
+Man said:When?
+(pause)
+Other Man said:Just now.
+Man said:No you didn't!
+Other Man said:Yes I did!
+Man said:You didn't!
+Other Man said:I'm telling you, I did!
+Man said:You did not!
+Other Man said:Oh I'm sorry, is this a five minute argument, or the full half hour?
+Man said:Ah!(taking out his wallet and paying) Just the five minutes.
+Other Man said:Just the five minutes. Thank you.
+Other Man said:Anyway, I did.
+Man said:You most certainly did not!
+```python
+the_file= open("sketch.txt") #如果大家不是把檔案放在python或Anaconda的工作目錄的話，請將完整的路徑打上去。
+print(the_file.readline(),end=" ")
+the_file.close() 用完記得要有close的習慣!
+結果:
+Man said:Is this the right room for an argument?
+```
+如果有記得執行close的話，他就會回到第一句話重新跑，不然持續readline的話，程式會自動跳下一句話，以此類推。  
+若要調整readline的位置可以如下做法。  
+```python
+the_file.seek(0)   #用這個之後會回到第一行(0)，因為readline()會暫存位置然後一直往下跑，若要調位置要用seek
+print(the_file.readline(),end=" ")
+結果:
+Man said:Is this the right room for an argument?
+```
+那我們如果想看整篇文章長什麼樣子呢?  
+結合for迴圈就可以囉!
+```python 
+for each_line in the_file:
+    print(each_line,end=" ")
+```
+之後我們要對資料進行處理，那要如何做呢?首先就是要知道如何「分割」把重複性高的部分用來當作分割的標準，能有效的剔除不要的部分。  
+例如「冒號」是最常出現的，我們就用冒號試試看。
+```python
+each_line.split(":")
+(role,line_spoken)=each_line.split(":") #可以理解成我要將切分的兩個部份，分別裝進role和line_spoken兩個箱子
+print(role)
+print(line_spoken)
+結果:
+Man said
+You most certainly did not!
+```
+這樣大家就能將資料切分開囉!  
+那接下來結合迴圈將整個檔案的資料切分開吧!
+```python
+data=open("sketch.txt")
+for each_line in data:
+    (role,line_spoken)=each_line.split(":")
+    print(role,end=" ")
+    print(line_spoken,end=" ")
+#這邊大家應該會出現error，這是因為資料裡面有句話有兩個冒號
+```
+遇到這個狀況怎麼處理呢?先來好好認識split這個函數吧!
+```python
+a= "free your mind"
+print(a.split()) #自己找東西折 結果變成三串字
+結果:
+['free', 'your', 'mind']
+--------------------------------------------
+b="welcome to the desert...of real"
+print(b.split("o")) #針對特定字元折
+結果:
+['welc', 'me t', ' the desert...', 'f real']
+--------------------------------------------
+c="what is real? how do you define real?"
+print(c.split(" ",2)) #只分割到第二個" " 執行兩次 產生三個字串
+結果:
+['what', 'is', 'real? how do you define real?']
+```
+所以若要順利跑出來，只要告訴程式我只要折一次
+```python
+data=open("sketch.txt")
+for each_line in data:
+	(role,line_spoken)=each_line.split(":",1) #每個字串只折一次
+	print(role,end=" ")
+	print(line_spoken,end=" ")
+#大家發現還是卡住，因為(pause)不符合，好煩阿阿阿阿!
+```
+這時再繼續補充另一個工具.find()  
+能幫助程式判斷某句話是否存在。  
+```python
+each_line="i tell you theres no such thing as flying circus"
+each_line.find(":")
+# -1 代表沒有 :這個字
+結果:
+-1
+---------------------------
+each_line="i tell you: theres no such thing as flying circus"
+each_line.find(":")
+#因為有冒號，他會告訴你冒號在字串裡面的位置。
+結果:
+10
+```
+接下來我們多下一個條件來嘗試結果。
+```python
+data=open("C:/Users/kiwii/AppData/Local/Programs/Python/Python37-32/sketch.txt")
+for each_line in data:
+    if not each_line.find(":")==-1: #如果找不到冒號的話就不執行那行
+        (role,line_spoken)=each_line.split(":",1)
+        print(role,end=" ")
+        print(line_spoken,end=" ")
+#可跑出全部，但(pause)不會被印出來因為不符合
+```
+終於跑出來啦!但大家會發現，印不出全部，有些訊息不符合會直接被跳過。  
+這樣有好有壞，好處是可以撇掉雜訊，壞處是可能也會漏掉關鍵訊息。  
+除了判斷式，我們還有另一個很棒的東西try、except可以用。  
+如果判斷式涵蓋的狀況不足以應對，那就會出error然後卡住，但try except可以解決這種狀況。
+缺點也是可能會漏掉關鍵訊息。
+```python
+data=open("C:/Users/kiwii/AppData/Local/Programs/Python/Python37-32/sketch.txt")
+for each_line in data:
+    try:
+        (role,line_spoken)=each_line.split(":",1)
+        print(role,end=" ")
+        print(line_spoken,end=" ")
+    except:
+        pass
+#可處理錯誤
+```
+更完整的寫法如下，為了應對檔案遺失等問題。
+```python
+import os
+if os.path.exists("sketch.txt"):
+	data=open("sketch.txt")
+	for each_line in data:
+		if not each_line.find(":")==-1:
+			(role,line_spoken)=each_line.split(":",1)
+			print(role,end=" ")
+			print("said:",end=" ")
+			print(line_spoken,end=" ")
+	data.close()
+else:
+	print("the data is missing")
+
+#結果也會全跑出來，但若你把txt刪掉就會跑出 missing
+-------------------------------------------------
+#或是下面這兩種寫法也可以
+try:
+	data=open("sketch.txt")
+	for each_line in data:
+		try:
+			(role,line_spoken)=each_line.split(":",1)
+			print(role,end=" ")
+			print("said:",end=" ")
+			print(line_spoken,end=" ")
+		except:
+			pass
+	data.close()
+except:
+	print("the data is missing") 
+---------------------------------------------------
+try:
+	data=open("sketch.txt")
+	for each_line in data:
+		try:
+			(role,line_spoken)=each_line.split(":",1)
+			print(role,end=" ")
+			print("said:",end=" ")
+			print(line_spoken,end=" ")
+		except ValueError: #具體告訴電腦是ValueError
+			pass
+	data.close()
+except IOError:  #具體告訴電腦是IOError
+	print("the data is missing")
+```
+
