@@ -825,3 +825,44 @@ for rounds in range (4):
 	for outcome in item:
 		print(outcome.text,outcome["href"]) #成果
 ```
+這邊來個額外的，由於我喜歡逛網路書店，但有時候真的很懶得一個一個點。    
+所以我決定自己把書的圖片都爬下來，這樣就能直接看進了什麼新書。  
+```python
+import requests
+from bs4 import BeautifulSoup
+import shutil
+for p in range(1,5):
+	url="https://www.books.com.tw/web/books_bmidm_1601/?o=1&v=1&page=x" #把網頁設x變成變數就會自己換頁
+	url=url.replace("x",str(p))
+	res=requests.get(url)
+	soup=BeautifulSoup(res.text)
+	for img in soup.select(".cover"):
+		fname=img["src"].split("/")[-1].split("&")[0]
+		res2=requests.get(img["src"].split("i=")[1].split("&")[0],stream=True)
+		f=open(fname,"wb")
+		shutil.copyfileobj(res2.raw,f) #raw會直接輸出網站結果--才會是圖片不是網址
+		f.close()
+```
+接下來是爬Dcard的練習，這邊比較特別不是用soup。有些網站有api的串流可以用。
+```python
+import matplotlib.pyplot as plt
+import requests,json #json檔要用 dictionary格式
+url="https://www.dcard.tw/_api/forums/dressup/posts?popular=false" 
+res=requests.get(url)
+resjson=json.loads(res.text)
+resjson
+#一樣的流程，先把整個網站爬下來
+```
+接下來要進行不一樣的，就是資料分析!  
+從爬下來的資料可以進行簡單的統計。來計算性別人數吧!
+```python
+gender={"F":0,"M":0} #為了讓男女可以計算  {}是dictionary型別
+for outcome in resjson:
+    gender[outcome["gender"]]=gender[outcome["gender"]]+1
+    
+sex=["女性","男性"]
+count=[gender["F"],gender["M"]]
+plt.bar(sex,count)
+plt.show()
+#視覺化呈現，可以看出在這個版留言的是男性多還是女性多
+```
