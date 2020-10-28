@@ -572,7 +572,7 @@ each_line.find(":")
 ```
 接下來我們多下一個條件來嘗試結果。
 ```python
-data=open("C:/Users/kiwii/AppData/Local/Programs/Python/Python37-32/sketch.txt")
+data=open("sketch.txt")
 for each_line in data:
     if not each_line.find(":")==-1: #如果找不到冒號的話就不執行那行
         (role,line_spoken)=each_line.split(":",1)
@@ -586,7 +586,7 @@ for each_line in data:
 如果判斷式涵蓋的狀況不足以應對，那就會出error然後卡住，但try except可以解決這種狀況。
 缺點也是可能會漏掉關鍵訊息。
 ```python
-data=open("C:/Users/kiwii/AppData/Local/Programs/Python/Python37-32/sketch.txt")
+data=open("sketch.txt")
 for each_line in data:
     try:
         (role,line_spoken)=each_line.split(":",1)
