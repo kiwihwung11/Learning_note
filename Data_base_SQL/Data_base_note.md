@@ -4,7 +4,8 @@
 * MySQL的部分會以phpmyadmin的操作為主。  
 * 網址:https://www.youtube.com/channel/UC21FHu4RIvvDM6nP1rmzcJg
 
-由於老師的教材十分完整，這邊只呈現語法、重要概念的整理以及我們的成果報告導覽。  
+由於老師的教材十分完整，這邊只呈現語法、重要概念的整理。  
+另外我們的學期成果嘗試完成了一個kaggle比賽的內容，請參考「第一組美式足球kaggle報告(整理).pdf」
 
 ## 重要概念
 #### 資料庫是什麼?
