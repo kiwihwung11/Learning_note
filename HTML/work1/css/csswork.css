@@ -1,0 +1,271 @@
+* {
+    box-sizing: border-box;
+ }
+
+
+body {
+  font-family:"Arial","微軟正黑體";
+  margin:0px;
+}
+
+a {
+    text-decoration:none;
+}
+
+.header {
+      background-color:black;
+      float:left;
+      padding:13px 36px 10px 30px;
+      text-align:left;
+      color:white;
+      font-size:23px;
+      font-weight:bold;
+      letter-spacing:-1px;
+      position:fixed;
+      top:0px;
+      
+}
+
+.header a {
+   display:inline-block;
+   width:7%;
+   color:#b4b4b4;
+   font-size:15px;
+   float:right;
+}
+
+.header img {
+   display:inline-block;
+   width:25px;
+   height:25px;
+   float:right;
+}
+
+.header button{
+   display:inline-block;
+   width:4%;
+   padding:2px; 
+   color:black;
+   border-radius: 2px;
+   background-color:white;
+   border: none;
+   font-size:15px;
+   float:right;
+}
+
+.header nav a:hover {
+  color:white;
+}
+
+:target:before {
+content: "";
+display: block;
+height: 90px;
+}
+
+.menu {
+    float:left;
+    text-align:left;
+    background-color:#2d2d2d;
+    padding:10px 0 10px 55px;
+    width:100%;
+    position:fixed;
+    top:45px;
+ }
+
+
+.menu a {
+   display:inline-block;
+   width:16%;
+   color:#b4b4b4;
+   font-size:15px;  
+}
+
+.row:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.content{
+  width:100%;
+  float:left;
+  margin-top:0%;
+}
+
+.main {
+  float:left;
+  padding-left:35px;
+  width:70%;
+}
+
+
+.v-show{
+  display:inline-block;
+
+}
+.video{
+  float:left;
+  width:60%;
+  margin-top:10px;
+  padding:0px 30px 20px 0px;
+
+}
+.v-text{
+  float:left;
+  width:30%;
+  margin-top:10px;
+}
+
+.v-text_r{
+  float:left;
+  width:40%;
+  margin-top:10px;
+}
+
+.v-href{
+  color:black;
+  font-size: 20px;
+  font-weight:bold;
+  text-align: left;
+}
+.v-href_r{
+  color:black;
+  font-size: 15px;
+  font-weight:bold;
+  text-align: left;
+}
+.v-text p{
+  color:#b4b4b4;
+  font-size: 12px;
+  text-align: left;
+}
+.org-addr{
+  color:grey;
+  font-size: 10px;
+  text-align: left;
+}
+
+.right {
+  background-color:#f2f2f2;
+  padding:10px 10px 10px 10px;
+  float:left;
+  width:30%;
+  margin-top:80px; 
+  
+}
+
+iframe {
+    width:100%;
+    height:auto;
+}
+
+
+.botcontent{
+  wide:100%;
+  float:left;
+  padding:29px 25.5% 30px 26%;
+  border-top:solid lightgrey 1px;
+  margin-top:5px;
+}
+
+.dailymotion{
+  position:absolute;
+  top:6500px;
+  right:65%;
+  width:25%;
+  text-align:left;
+  color:lightgrey;
+  font-size:25px;
+  margin-top:5px;
+  font-weight: bold;
+}
+
+.bottom{
+  float:center;
+  padding-bottom:8%;
+}
+
+.bottom a{
+   display:inline-block;
+   width:16%;
+   color:black;
+   font-size:14px;
+   float:left;
+   padding:0px 10px 10px 0px;
+}
+
+.bottom2{
+  float:center;
+  width:100%;
+  border-top:solid lightgrey 1px;
+  text-align:center;
+  padding-top:30px;
+}
+
+.bottom2 a{
+   display:inline-block;
+   width:20%;
+   padding-right:13px;
+   color:black;
+   font-size:12px;
+   float:left;   
+}
+
+
+
+.footer {
+  padding:15px 12%;
+  background-color:#f2f2f2;
+  text-align:left;
+  float:left;
+  width:100%;
+  color:#a5a5a5;
+  font-size:12px;
+}
+
+.footer img{
+  display:inline-block;
+  width:25px;
+  height:25px;
+  float:right;
+  margin-right:20px: 
+}
+
+
+@media only screen and (min-width: 600px) {
+  /* For tablets: */
+  .col-s-1 {width: 8.33%;}
+  .col-s-2 {width: 16.66%;}
+  .col-s-3 {width: 25%;}
+  .col-s-4 {width: 33.33%;}
+  .col-s-5 {width: 41.66%;}
+  .col-s-6 {width: 50%;}
+  .col-s-7 {width: 58.33%;}
+  .col-s-8 {width: 66.66%;}
+  .col-s-9 {width: 75%;}
+  .col-s-10 {width: 83.33%;}
+  .col-s-11 {width: 91.66%;}
+  .col-s-12 {width: 100%;}
+}
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+  .col-1 {width: 8.33%;}
+  .col-2 {width: 16.66%;}
+  .col-3 {width: 25%;}
+  .col-4 {width: 35%;}
+  .col-5 {width: 41.66%;}
+  .col-6 {width: 50%;}
+  .col-7 {width: 58.33%;}
+  .col-8 {width: 65%;}
+  .col-9 {width: 75%;}
+  .col-10 {width: 83.33%;}
+  .col-11 {width: 91.66%;}
+  .col-12 {width: 100%;}
+}
+@media only screen and (max-width:600px) {
+ /* For mobile phones: */
+.menu, .main, .right, .header,.video ,.vtext{
+      width:100%;
+  }
+}
