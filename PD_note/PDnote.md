@@ -866,3 +866,104 @@ plt.bar(sex,count)
 plt.show()
 #視覺化呈現，可以看出在這個版留言的是男性多還是女性多
 ```
+那今天假設我不要只統計性別，我想知道都是哪些學校的人在發言那該怎麼統計呢?  
+一樣先載入套件，並且抓出網址。
+```python
+import matplotlib.pyplot as plt
+import requests,json
+import sys
+url="https://www.dcard.tw/_api/forums/pet/posts?popular=false"
+res=requests.get(url)
+resjson=json.loads(res.text)
+resjson
+```
+之後的流程和上面差不多，但是要處理的資料不太一樣，要統計不同學校。
+```python
+plt.rcParams['font.sans-serif']=['DFKai-SB'] 
+non_bmp_map=dict.fromkeys(range(0x10000,sys.maxunicode+1),0xfffd)
+#上面兩行是將表情符號類翻譯成文字
+school_list=[]
+for output in resjson:
+    S_name=output["school"].translate(non_bmp_map)
+    if ("學" or "校") in S_name:
+        school_list.append(S_name)
+#這邊設定了一個重要的條件，就是我只要有「學」或是「校」的我才要收入。
+#因為Dcard的學校可以讓使用者隨便輸入，要排除非學校的部分。
+```
+接著一樣利用字典的形式來將資料打上編號。
+```python
+school={}
+for x in range(len(school_list)):
+    school.update({school_list[x]:0})
+school
+#這樣就會有各間大學的名稱，並且初始值會是零
+```
+最後就進行統計+視覺化就完成了!
+```python
+for output2 in resjson:
+    S_name=output2["school"].translate(non_bmp_map)
+    if ("學" or "校") in S_name:
+        school[output2["school"]]=school[output2["school"]]+1
+count=[]
+for y in school_list:
+    count.append(school[y])
+plt.barh(school_list,count)
+plt.show()
+```
+到這裡恭喜大家!跟完一學期的課程了!  
+接下來就是挑戰時間，內容包含兩個作業的挑戰和一次學期報告。  
+作業的部分下面會繼續介紹，學期報告則是有影片介紹，有需要參考的人再繼續往下看就好。  
+```python
+#線上作業1
+#作業目標:將電商網站的一頁商品名稱、價格爬下來並寫入CSV
+#進階挑戰:將圖片也都抓下來，並且要翻兩頁
+#導入資料、套件
+import requests
+import json
+res=requests.get("https://ecshweb.pchome.com.tw/search/v3.3/all/category/DEAM/results?q=%E9%81%8A%E6%88%B2&page=1&sort=sale/dc")
+data = json.loads(res.text)
+data
+
+#整理資料
+clean= data['prods']
+for item in clean:
+	print(item['name'],item['price'])	
+import csv
+goods_name=[]
+goods_price=[]
+for item in clean:
+	goods_name.append(item['name'])
+	goods_price.append(item['price'])
+list_id=[]
+for x in range(len(goods_name)):
+		list_id.append(x)
+
+#將商品id、名稱、價格寫入CSV
+to_col=zip(list_id,goods_name,goods_price)
+with open("online_HW.csv",'w',encoding='big5',newline='') as myfile:
+	data=csv.writer(myfile)
+	data.writerow(['ID','桌遊名稱','價格'])
+	for row in to_col:
+		data.writerow(row)
+
+#抓取商品圖片、網頁翻頁
+url="https://"+net[x]+".ecimg.tw/"+item['picS']
+pic=[]
+for item in clean:
+	pic.append(item['picS'])
+len(pic)
+net=['b','c','d','e','f']
+for x in range (2):
+	net.extend(net)
+#net和pic分別對應的是網頁的頁數與不同商品的圖片展示
+url=[]
+for x in range(len(net)):
+	url2="https://"+net[x]+".ecimg.tw/"+pic[x]
+	url.append(url2)
+for img in item['picS']:
+	fname=item['picS'].split("/")[-1]
+```
+最後有關學期報告，也就是爬蟲的應用!就請大家參越我的報告影片吧!  
+連結:https://www.youtube.com/watch?v=zhk7sVRZvEg 
+以上是我的程式設計學習筆記，感謝您的閱讀。
+
