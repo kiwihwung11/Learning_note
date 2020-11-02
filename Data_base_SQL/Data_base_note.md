@@ -78,3 +78,93 @@
 
 3.超鍵or複合鍵
 * 定義:可作為資料表的主鍵,且是由兩個或兩個以上欄位所組成
+
+## 資料庫語法整理
+SELECT 選擇
+> SELECT "欄位名" FROM "表格名";
+
+DISTINCT 區別(一樣的欄位不會重複出現)
+> SELECT DISTINCT "欄位名"  
+> FROM "表格名";
+
+WHERE 條件
+> SELECT "欄位名"  
+> FROM "表格名"  
+> WHERE "條件";
+
+AND︐且、OR︐或
+> SELECT "欄位名"  
+> FROM "表格名"  
+> WHERE "簡單條件"  
+> {[AND|OR] "簡單條件"}+;  
+
+IN 屬於(會跑出，符合該值的資料)
+> SELECT "欄位名"  
+> FROM "表格名"  
+> WHERE "欄位名" IN ('值一', '值二', ...);  
+
+BETWEEN 之間
+> SELECT "欄位名"  
+> FROM "表格名"  
+> WHERE "欄位名" BETWEEN '值一' AND '值二';  
+
+LIKE 模式(把你想要的某種符合條件的類項全抓出來)
+> SELECT "欄位名"  
+> FROM "表格名"  
+> WHERE "欄位名" LIKE {模式};  
+
+ORDER BY︐排序
+> SELECT "欄位名"  
+> FROM "表格名"  
+> [WHERE "條件"]  
+> ORDER BY "欄位名" [ASC, DESC];  
+
+函數AVG() 平均
+> SELECT AVG("欄位名")  
+> FROM "表格名";  
+
+函數COUNT() 計數(算總共幾筆資料)
+> SELECT COUNT("欄位名")  
+> FROM "表格名";
+
+函數MAX() 最大值
+> SELECT MAX ("欄位名")  
+> FROM "表格名";  
+
+函數MIN() 最小值
+> SELECT MIN ("欄位名")  
+> FROM "表格名";  
+
+函數SUM() 總和
+> SELECT SUM ("欄位名")  
+> FROM "表格名";  
+
+GROUP BY 分組
+> SELECT "欄位1", SUM("欄位2")  
+> FROM "表格名"  
+> GROUP BY "欄位1";  
+
+HAVING 函數條件
+> SELECT "欄位1", SUM("欄位2")  
+> FROM "表格名"  
+> GROUP BY "欄位1"  
+> HAVING (函數條件);  
+
+條件式的查詢值
+* %、_ 萬用字元
+* % (百分比符號)︓代表零個、一個、或數個字母。
+* _ (底線)︓代表剛好一個字母。
+* 萬用字元是與LIKE 關鍵字一起使用的。
+* 'XYZ%': 所有以'XYZ' 起頭的字串
+* '%XYZ': 所有以'XYZ' 結尾的字串
+* '%DD%': 所有含有'DD'這個模式的字串
+* 'K_J': 所有以'K' 起頭︐另一任何值的字元︐且以'J' 為結尾的字串
+* '_KJ%'︓ 所有第二個字母為'K' 和第三個字母為'J' 的字串
+
+
+
+
+
+
+
+
