@@ -150,6 +150,58 @@ HAVING 函數條件
 > GROUP BY "欄位1"  
 > HAVING (函數條件);  
 
+Inner join 內連(兩張表格做合併，標準為兩張表格的交集)
+> SELECT a.id, b.id  
+> FROM 表格1 as a(自行設定)  
+> INNER JOIN 表格2 as b(自行設定)  
+> ON a.id= b.id
+
+Outer join 外連(兩張表格做合併，標準為兩張表格不交集的部分)
+> SELECT a.id, b.id  
+> FROM 表格1 as a(自行設定)  
+> Outer JOIN 表格2 as b(自行設定)  
+> ON a.id= b.id
+
+Left join 左連(兩張表格做合併，標準為左方表格有的資料)
+> SELECT a.id, b.id  
+> FROM 表格1 as a(自行設定)  
+> Left JOIN 表格2 as b(自行設定)  
+> ON a.id= b.id
+
+Right join 左連(兩張表格做合併，標準為右方表格有的資料)
+> SELECT a.id, b.id  
+> FROM 表格1 as a(自行設定)  
+> RIGHT JOIN 表格2 as b(自行設定)  
+> ON a.id= b.id
+
+CREATE TABLE 新增表格
+> CREATE TABLE "表格名"  
+> (“欄位1”"欄位1資料型別",  
+> ”欄位2”"欄位2資料型別",... );  
+
+ALTER TABLE 修改表格
+> ALTER TABLE "tablename"  
+> ALTER TABLE 舊資料表名稱RENAME TO新資料表名稱  
+
+DROP TABLE 刪除表格
+> DROP TABLE "表格名";
+
+INSERT INTO 新增資料
+> INSERT INTO "表格名"("欄位1","欄位2",...)  
+> VALUES("值,"值2",...);
+
+UPDATE 修改資料
+> UPDATE "表格名"    
+> SET"欄位1=[新値]  
+> WHERE "條件"
+
+DELETE 刪除資料
+> DELETE FROM "表格名"  
+> WHERE "條件";
+
+TRUNCATE TABLE 刪除資料表中的全部資料
+> TRUNCATE TABLE "表格名";
+
 條件式的查詢值
 * %、_ 萬用字元
 * % (百分比符號)︓代表零個、一個、或數個字母。
