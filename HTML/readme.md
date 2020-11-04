@@ -1,8 +1,8 @@
 # 網路資料科技應用
 這裡是我的網路資料科技應用學習成果。  
 這堂課的學習資源為老師的PPT(不上傳)、線上教學以及網站學習資源W3schools。  
-線上課程資源:https://www.youtube.com/channel/UCnNIkWD9EbeHJ1f0oXI0rsw/videos(陪你一起寫程式)  
-線上學習資源:https://www.w3schools.com/html/default.asp(W3schools)  
+線上課程資源:https://www.youtube.com/channel/UCnNIkWD9EbeHJ1f0oXI0rsw/videos  (陪你一起寫程式)  
+線上學習資源:https://www.w3schools.com/html/default.asp  (W3schools)  
 由於這堂課架設的網站伺服器是使用Amazon的AWS educate架的，現在已過期，以下僅提供我的網站原始碼。  
 
 #### work 1
